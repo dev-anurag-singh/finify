@@ -20,13 +20,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <div className='bg-blue-600 flex items-center justify-center'>
-        <Image
-          src='/logo.svg'
-          height={32}
-          width={78}
-          className='w-24'
-          alt='brand logo'
-        />
+        <Image src='/logo.svg' height={100} width={100} alt='brand logo' />
       </div>
     </div>
   );
