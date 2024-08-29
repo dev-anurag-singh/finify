@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1724785317215,
+      "tag": "0000_parallel_carmella_unuscione",
+      "breakpoints": true
+    }
+  ]
+}
