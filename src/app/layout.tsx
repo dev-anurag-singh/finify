@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { QueryProvider } from '@/providers/query-provider';
 import NewAccountSheet from '@/features/accounts/components/new-account-sheet';
 import { Toaster } from '@/components/ui/toaster';
+import EditAccountSheet from '@/features/accounts/components/edit-account-sheet';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <QueryProvider>
             <NewAccountSheet />
+            <EditAccountSheet />
             {children}
             <Toaster />
           </QueryProvider>
