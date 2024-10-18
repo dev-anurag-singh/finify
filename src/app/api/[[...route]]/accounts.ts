@@ -120,7 +120,7 @@ const app = new Hono()
     async c => {
       const auth = getAuth(c);
       const id = c.req.param('id');
-      const { name } = c.req.valid('json');
+      const values = c.req.valid('json');
 
       if (!auth?.userId) {
         return c.json({ error: 'Unauthorized' }, 401);
@@ -128,7 +128,7 @@ const app = new Hono()
 
       const [data] = await db
         .update(accounts)
-        .set({ name })
+        .set(values)
         .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
         .returning();
 
