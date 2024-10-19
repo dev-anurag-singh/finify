@@ -7,30 +7,18 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { insertAccountSchema } from '@/db/schema';
 import AccountForm from './account-form';
-import { z } from 'zod';
 import { useOpenAccount } from '@/features/accounts/hooks/use-open-account';
 import { useGetAccount } from '../api/use-get-account';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEditAccount } from '@/features/accounts/api/use-edit-account';
-
-const formSchema = insertAccountSchema.pick({
-  name: true,
-});
-
-type FormValues = z.input<typeof formSchema>;
+import { useDeleteAccount } from '../api/use-delete-account';
 
 function EditAccountSheet() {
   const { isOpen, onClose, id } = useOpenAccount();
   const { data, isLoading } = useGetAccount(id);
   const { mutate, isPending } = useEditAccount(id);
-
-  const onSubmit = (values: FormValues) => {
-    mutate(values, {
-      onSuccess: () => onClose(),
-    });
-  };
+  const { mutate: deleteAccount, isPending: isDeleting } = useDeleteAccount(id);
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -44,8 +32,15 @@ function EditAccountSheet() {
         ) : (
           <AccountForm
             id={id}
-            onSubmit={onSubmit}
-            disabled={isPending}
+            onSubmit={values => {
+              mutate(values, {
+                onSuccess: onClose,
+              });
+            }}
+            onDelete={() => {
+              deleteAccount(undefined, { onSuccess: onClose });
+            }}
+            disabled={isPending || isDeleting}
             defaultValues={data}
           />
         )}
