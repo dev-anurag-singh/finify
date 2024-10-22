@@ -24,7 +24,16 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ConfirmDialog } from './confirm-dialog';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,7 +53,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -65,8 +74,8 @@ export function DataTable<TData, TValue>({
 
   const handleDelete = () => {
     onDelete(table.getFilteredSelectedRowModel().rows, () => {
-      setDialogOpen(false);
       table.resetRowSelection();
+      setIsConfirmOpen(false);
     });
   };
 
@@ -82,24 +91,40 @@ export function DataTable<TData, TValue>({
           className='max-w-sm'
         />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <>
-            <Button
-              size={'sm'}
-              variant={'outline'}
-              className='font-normal text-xs'
-              disabled={disabled}
-              onClick={() => setDialogOpen(true)}
-            >
-              <Trash className='size-4 mr-2' />
-              Delete ({table.getFilteredSelectedRowModel().rows.length})
-            </Button>
-            <ConfirmDialog
-              isOpen={dialogOpen}
-              disabled={disabled}
-              setIsOpen={setDialogOpen}
-              onConfirm={handleDelete}
-            />
-          </>
+          <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+            <AlertDialogTrigger asChild>
+              <Button
+                size={'sm'}
+                variant={'outline'}
+                className='font-normal text-xs'
+                disabled={disabled}
+              >
+                <Trash className='size-4 mr-2' />
+                Delete ({table.getFilteredSelectedRowModel().rows.length})
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your data.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel disabled={disabled}>
+                  Cancel
+                </AlertDialogCancel>
+                <Button
+                  disabled={disabled}
+                  variant={'destructive'}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         )}
       </div>
       <div className='rounded-md border'>
