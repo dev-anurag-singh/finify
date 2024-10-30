@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Plus } from 'lucide-react';
-import { Account, columns } from './columns';
+import { columns } from './columns';
 import { DataTable } from '@/components/data-table';
 import { useNewAccount } from '@/features/accounts/hooks/use-new-account';
 import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
@@ -52,5 +52,3 @@ function AccountsPage() {
 }
 
 export default AccountsPage;
-
-// START AT 3:37:45
