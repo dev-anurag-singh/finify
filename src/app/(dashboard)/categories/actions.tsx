@@ -6,8 +6,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { DeleteAccount } from '@/features/accounts/components/delete-account';
-import { useOpenAccount } from '@/features/accounts/hooks/use-open-account';
+import { DeleteCategory } from '@/features/categories/components/delete-category';
+import { useOpenCategory } from '@/features/categories/hooks/use-open-category';
 import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const Actions = ({ id, name }: Props) => {
-  const { onOpen } = useOpenAccount();
+  const { onOpen } = useOpenCategory();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -38,8 +38,8 @@ export const Actions = ({ id, name }: Props) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* Conformation Modal for deleting account */}
-      <DeleteAccount
+      {/* Conformation Modal for deleting category */}
+      <DeleteCategory
         open={isOpen}
         onOpenChange={setIsOpen}
         name={name}
