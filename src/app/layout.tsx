@@ -6,6 +6,8 @@ import { QueryProvider } from '@/providers/query-provider';
 import NewAccountSheet from '@/features/accounts/components/new-account-sheet';
 import { Toaster } from '@/components/ui/toaster';
 import EditAccountSheet from '@/features/accounts/components/edit-account-sheet';
+import NewCategorySheet from '@/features/categories/components/new-category-sheet';
+import EditCategorySheet from '@/features/categories/components/edit-category-sheet';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +28,8 @@ export default function RootLayout({
           <QueryProvider>
             <NewAccountSheet />
             <EditAccountSheet />
+            <NewCategorySheet />
+            <EditCategorySheet />
             {children}
             <Toaster />
           </QueryProvider>
