@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 import accounts from './accounts';
-import categories from './accounts';
+import categories from './categories';
 
 export const runtime = 'edge';
 
