@@ -2,22 +2,24 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Plus } from 'lucide-react';
-import { Account, columns } from './columns';
+import { columns } from './columns';
 import { DataTable } from '@/components/data-table';
-import { useNewAccount } from '@/features/accounts/hooks/use-new-account';
-import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
-import { useDeleteAccounts } from '@/features/accounts/api/use-delete-accounts';
+import { useNewCategory } from '@/features/categories/hooks/use-new-category';
+import { useGetCategories } from '@/features/categories/api/use-get-categories';
+import { useDeleteCategories } from '@/features/categories/api/use-delete-categories';
 
-function AccountsPage() {
-  const { onOpen } = useNewAccount();
-  const { data, isLoading } = useGetAccounts();
-  const { mutate: deleteAccounts, isPending } = useDeleteAccounts();
+function CategoriesPage() {
+  const { onOpen } = useNewCategory();
+  const { data, isLoading } = useGetCategories();
+  const { mutate: deleteAccounts, isPending } = useDeleteCategories();
 
   return (
     <div className='container px-0 pb-10 -mt-24'>
       <Card className='border-none drop-shadow-sm'>
         <CardHeader className='gap-y-2 lg:flex-row lg:items-center lg:justify-between'>
-          <CardTitle className='text-xl line-clamp-1'>Accounts Page</CardTitle>
+          <CardTitle className='text-xl line-clamp-1'>
+            Categories Page
+          </CardTitle>
           <Button disabled={isLoading || isPending} onClick={onOpen} size='sm'>
             <Plus className='size-4 mr-2' />
             Add new
@@ -51,6 +53,4 @@ function AccountsPage() {
   );
 }
 
-export default AccountsPage;
-
-// START AT 3:37:45
+export default CategoriesPage;
