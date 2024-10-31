@@ -8,12 +8,12 @@ import { InferResponseType } from 'hono';
 import { client } from '@/lib/hono';
 import { Actions } from './actions';
 
-export type Account = InferResponseType<
-  typeof client.api.accounts.$get,
+export type Category = InferResponseType<
+  typeof client.api.categories.$get,
   200
 >['data'][0];
 
-export const columns: ColumnDef<Account>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
     id: 'select',
     header: ({ table }) => (
