@@ -3,11 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { QueryProvider } from '@/providers/query-provider';
-import NewAccountSheet from '@/features/accounts/components/new-account-sheet';
 import { Toaster } from '@/components/ui/toaster';
-import EditAccountSheet from '@/features/accounts/components/edit-account-sheet';
-import NewCategorySheet from '@/features/categories/components/new-category-sheet';
-import EditCategorySheet from '@/features/categories/components/edit-category-sheet';
+import { SheetProvider } from '@/providers/sheet-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,10 +23,7 @@ export default function RootLayout({
       <html lang='en'>
         <body className={inter.className}>
           <QueryProvider>
-            <NewAccountSheet />
-            <EditAccountSheet />
-            <NewCategorySheet />
-            <EditCategorySheet />
+            <SheetProvider />
             {children}
             <Toaster />
           </QueryProvider>
