@@ -11,7 +11,7 @@ const links = [
     href: '/',
   },
   {
-    label: 'Transations',
+    label: 'Transactions',
     href: '/transactions',
   },
   {
