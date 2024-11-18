@@ -28,6 +28,7 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
             'w-full justify-start text-left font-normal',
             !value && 'text-muted-foreground'
           )}
+          disabled={disabled}
         >
           <CalendarIcon className='size-4 mr-2' />
           {value ? format(value, 'PPP') : <span>Pick a date</span>}
