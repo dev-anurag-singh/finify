@@ -22,7 +22,10 @@ function NewTransactionSheet() {
           <SheetTitle>New Transaction</SheetTitle>
           <SheetDescription>Add a new transaction.</SheetDescription>
         </SheetHeader>
-        <TransactionForm onSubmit={values => mutate(values)} disabled={isPending} />
+        <TransactionForm
+          onSubmit={values => mutate(values, { onSuccess: onClose })}
+          disabled={isPending}
+        />
       </SheetContent>
     </Sheet>
   );
