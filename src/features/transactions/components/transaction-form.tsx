@@ -38,7 +38,7 @@ type FormValues = z.input<typeof formSchema>;
 
 type Props = {
   id?: string;
-  defaultValues?: FormValues;
+  defaultValues?: ApiValues;
   onSubmit: (values: ApiValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
@@ -53,7 +53,14 @@ function TransactionForm({
 }: Props) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
+    defaultValues: {
+      date: defaultValues?.date,
+      accountId: defaultValues?.accountId,
+      categoryId: defaultValues?.categoryId,
+      payee: defaultValues?.payee || '',
+      amount: defaultValues?.amount.toString(),
+      notes: defaultValues?.notes,
+    },
   });
 
   const handleSubmit = (values: FormValues) => {
@@ -107,8 +114,8 @@ function TransactionForm({
 
   if (accountQuery.isLoading || categoryQuery.isLoading) {
     return (
-      <div>
-        <Loader2 />
+      <div className='py-10 grid place-content-center'>
+        <Loader2 className='size-6 animate-spin' />
       </div>
     );
   }
@@ -194,7 +201,7 @@ function TransactionForm({
           name='amount'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Payee</FormLabel>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
                 <AmountInput
                   disabled={isDisabled}
