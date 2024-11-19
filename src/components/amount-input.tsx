@@ -25,7 +25,15 @@ export const AmountInput = ({
   disabled,
 }: Props) => {
   const parsedValue = parseFloat(value);
-  //   at 7:02
+  const isIncome = parsedValue > 0;
+  const isExpence = parsedValue < 0;
+
+  const onReversedValue = () => {
+    if (!value) return;
+    const newValue = parseFloat(value) * -1;
+    onChange(newValue.toString());
+  };
+
   return (
     <div className='relative'>
       <TooltipProvider>
@@ -33,9 +41,19 @@ export const AmountInput = ({
           <TooltipTrigger asChild>
             <button
               type='button'
-              onClick={() => {}}
-              className='bg-slate-400 hover:bg-slate-600 absolute top-1.5 left-1.5 rounded-md p-2 flex items-center justify-center transition'
-            ></button>
+              onClick={onReversedValue}
+              className={cn(
+                'bg-slate-400 hover:bg-slate-600 absolute top-1.5 left-1.5 rounded-md p-2 flex items-center justify-center transition',
+                {
+                  'bg-emerald-500 hover:bg-emerald-600': isIncome,
+                  'bg-rose-500 hover:bg-rose-600': isExpence,
+                }
+              )}
+            >
+              {!parsedValue && <Info className='size-3 text-white' />}
+              {isIncome && <PlusCircle className='size-3 text-white' />}
+              {isExpence && <MinusCircle className='size-3 text-white' />}
+            </button>
           </TooltipTrigger>
           <TooltipContent align='start'>
             Use [+] for income and [-] for expenses
@@ -43,7 +61,7 @@ export const AmountInput = ({
         </Tooltip>
       </TooltipProvider>
       <CurrencyInput
-        className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+        className='flex pl-10 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
         prefix='$'
         placeholder={placeholder}
         value={value}
