@@ -3,6 +3,7 @@ import { Loader2, Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { insertTransactionSchema } from '@/db/schema';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/select';
@@ -20,6 +21,7 @@ import { useGetCategories } from '@/features/categories/api/use-get-categories';
 import { useCreateCategory } from '@/features/categories/api/use-create-category';
 import { Textarea } from '@/components/ui/textarea';
 import { AmountInput } from '@/components/amount-input';
+import { convertAmountToMiliunits } from '@/lib/utils';
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -29,13 +31,15 @@ const formSchema = z.object({
   amount: z.string(),
   notes: z.string().nullable().optional(),
 });
+const apiSchema = insertTransactionSchema.omit({ id: true });
 
+type ApiValues = z.input<typeof apiSchema>;
 type FormValues = z.input<typeof formSchema>;
 
 type Props = {
   id?: string;
   defaultValues?: FormValues;
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: ApiValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
 };
@@ -53,7 +57,13 @@ function TransactionForm({
   });
 
   const handleSubmit = (values: FormValues) => {
-    onSubmit(values);
+    const amount = parseFloat(values.amount);
+    const amountInMiliunits = convertAmountToMiliunits(amount);
+
+    onSubmit({
+      ...values,
+      amount: amountInMiliunits,
+    });
   };
 
   const handleDelete = () => {
@@ -214,7 +224,7 @@ function TransactionForm({
         />
 
         <Button disabled={isDisabled} className='w-full'>
-          {id ? 'Save changes' : 'Create account'}
+          {id ? 'Save changes' : 'Create transaction'}
         </Button>
         {!!id && (
           <Button
@@ -225,7 +235,7 @@ function TransactionForm({
             variant={'outline'}
           >
             <Trash className='size-4 mr-2' />
-            Delete account
+            Delete transations
           </Button>
         )}
       </form>
