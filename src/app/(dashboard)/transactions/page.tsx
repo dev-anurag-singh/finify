@@ -4,14 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Plus } from 'lucide-react';
 import { columns } from './columns';
 import { DataTable } from '@/components/data-table';
-import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
-import { useDeleteAccounts } from '@/features/accounts/api/use-delete-accounts';
 import { useNewTransaction } from '@/features/transactions/hooks/use-new-transaction';
+import { useGetTransactions } from '@/features/transactions/api/use-get-transactions';
+import { useDeleteTransactions } from '@/features/transactions/api/use-delete-transactions';
 
 function TransactionPage() {
   const { onOpen } = useNewTransaction();
-  const { data, isLoading } = useGetAccounts();
-  const { mutate: deleteAccounts, isPending } = useDeleteAccounts();
+  const { data, isLoading } = useGetTransactions();
+  const { mutate: deleteAccounts, isPending } = useDeleteTransactions();
 
   return (
     <div className='container px-0 pb-10 -mt-24'>
@@ -34,7 +34,7 @@ function TransactionPage() {
             <DataTable
               columns={columns}
               data={data || []}
-              filterKey='name'
+              filterKey='payee'
               onDelete={(row, fn) => {
                 const ids = row.map(r => r.original.id);
                 deleteAccounts(
