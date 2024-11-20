@@ -38,7 +38,9 @@ function AccountForm({
 }: Props) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || { name: '' },
+    defaultValues: {
+      name: defaultValues?.name || '',
+    },
   });
 
   const handleSubmit = (values: FormValues) => {
