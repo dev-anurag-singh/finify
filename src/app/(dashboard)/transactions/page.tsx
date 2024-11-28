@@ -7,11 +7,64 @@ import { DataTable } from '@/components/data-table';
 import { useNewTransaction } from '@/features/transactions/hooks/use-new-transaction';
 import { useGetTransactions } from '@/features/transactions/api/use-get-transactions';
 import { useDeleteTransactions } from '@/features/transactions/api/use-delete-transactions';
+import { useState } from 'react';
+import { UploadButton } from './upload-button';
+import { ImportCard } from './import-card';
+import { transactions } from '@/db/schema';
+import { useCreateTransactions } from '@/features/transactions/api/use-create-transactions';
+
+enum VARIANTS {
+  LIST = 'LIST',
+  IMPORT = 'IMPORT',
+}
+
+const INITIAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {},
+};
 
 function TransactionPage() {
+  const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+  const [importedResults, setImportedResults] = useState(
+    INITIAL_IMPORT_RESULTS
+  );
+
   const { onOpen } = useNewTransaction();
   const { data, isLoading } = useGetTransactions();
-  const { mutate: deleteAccounts, isPending } = useDeleteTransactions();
+  const { mutate: deleteTransactions, isPending } = useDeleteTransactions();
+  const { mutate: createTransactions, isPending: creatingTransactions } =
+    useCreateTransactions();
+
+  const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    setImportedResults(results);
+    setVariant(VARIANTS.IMPORT);
+  };
+
+  const onCancelImport = () => {
+    setImportedResults(INITIAL_IMPORT_RESULTS);
+    setVariant(VARIANTS.LIST);
+  };
+
+  const onSubmitImport = (values: (typeof transactions.$inferInsert)[]) => {
+    createTransactions(values, {
+      onSuccess: () => {
+        onCancelImport();
+      },
+    });
+  };
+
+  if (variant === VARIANTS.IMPORT) {
+    return (
+      <>
+        <ImportCard
+          data={importedResults.data}
+          onCancel={onCancelImport}
+          onSubmit={onSubmitImport}
+        />
+      </>
+    );
+  }
 
   return (
     <div className='container px-0 pb-10 -mt-24'>
@@ -20,10 +73,18 @@ function TransactionPage() {
           <CardTitle className='text-xl line-clamp-1'>
             Transaction History
           </CardTitle>
-          <Button disabled={isLoading || isPending} onClick={onOpen} size='sm'>
-            <Plus className='size-4 mr-2' />
-            Add new
-          </Button>
+          <div className='flex flex-col lg:flex-row items-center gap-4'>
+            <Button
+              disabled={isLoading || isPending}
+              onClick={onOpen}
+              size='sm'
+              className='w-full lg:w-auto'
+            >
+              <Plus className='size-4 mr-2' />
+              Add new
+            </Button>
+            <UploadButton onUpload={onUpload} />
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -37,7 +98,7 @@ function TransactionPage() {
               filterKey='payee'
               onDelete={(row, fn) => {
                 const ids = row.map(r => r.original.id);
-                deleteAccounts(
+                deleteTransactions(
                   { ids },
                   {
                     onSuccess: fn,
