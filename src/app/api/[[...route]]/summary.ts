@@ -87,6 +87,11 @@ const app = new Hono().get(
       lastPeroid.expenses
     );
 
+    const remainingChange = calculatePercentageChange(
+      currentPeroid.remaining,
+      lastPeroid.remaining
+    );
+
     const category = await db
       .select({
         name: categories.name,
@@ -152,12 +157,16 @@ const app = new Hono().get(
     const days = fillMissingDays(activeDays, startDate, endDate);
 
     return c.json({
-      currentPeroid,
-      lastPeroid,
-      incomeChange,
-      expensesChange,
-      finalCategories,
-      days,
+      data: {
+        remainingAmount: currentPeroid.remaining,
+        remainingChange,
+        incomeAmount: currentPeroid.income,
+        incomeChange,
+        expensesAmount: currentPeroid.expenses,
+        expensesChange,
+        categories: finalCategories,
+        days,
+      },
     });
   }
 );
