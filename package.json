@@ -52,6 +52,7 @@
     "react-papaparse": "^4.4.0",
     "react-select": "^5.8.3",
     "react-use": "^17.5.1",
+    "recharts": "^2.15.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8",
