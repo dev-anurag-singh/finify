@@ -3,6 +3,7 @@ import HeaderLogo from '@/components/header-logo';
 import Navigation from '@/components/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import Welcome from '@/components/welcome';
+import { Filters } from '@/components/filters';
 
 function Header() {
   return (
@@ -21,6 +22,7 @@ function Header() {
           </ClerkLoading>
         </div>
         <Welcome />
+        <Filters />
       </div>
     </header>
   );
