@@ -17,6 +17,11 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
           <ClerkLoading>
             <Loader2 className='animate-spin text-muted-foreground' />
           </ClerkLoading>
+          <div>
+            <p className='text-base text-[#7E8CA0]'>
+              Use pass1234 to login as a demo user.
+            </p>
+          </div>
         </div>
       </div>
       <div className='bg-blue-600 flex items-center justify-center'>
