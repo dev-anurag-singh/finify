@@ -2,7 +2,7 @@
 
 Finify is a modern web application that helps users manage their personal finances with ease. Track your earnings and expenses, categorize transactions, visualize trends with powerful charts, and gain control over your financial life.
 
-![Finify Banner](finify-banner.png) <!-- optional banner -->
+![Finify Banner](screenshot/finify-preview.png) <!-- optional banner -->
 
 ## ✨ Features
 
