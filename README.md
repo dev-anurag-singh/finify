@@ -32,7 +32,7 @@ Finify is a modern web application that helps users manage their personal financ
 
 1. Clone the Repository
    ```bash
-   git clone https://github.com/yourusername/finify.git
+   git clone https://github.com/dev-anurag-singh/finify.git
    cd finify
    ```
 
