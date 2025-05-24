@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💰 Finify – Personal Finance Tracker
 
-## Getting Started
+Finify is a modern web application that helps users manage their personal finances with ease. Track your earnings and expenses, categorize transactions, visualize trends with powerful charts, and gain control over your financial life.
 
-First, run the development server:
+![Finify Banner](finify-banner.png) <!-- optional banner -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 **Full Authentication** – Secure user accounts powered by [Clerk.js](https://clerk.dev).
+- 💸 **Track Earnings & Expenses** – Add and manage your financial transactions.
+- 🏷️ **Categories** – Organize your transactions into meaningful categories.
+- 📊 **Interactive Charts** – Visualize income and spending trends with:
+  - Pie charts
+  - Area charts  
+  *(Powered by [Chart.js](https://www.chartjs.org))*
+- 🔍 **Advanced Search** – Quickly find transactions by keywords, categories, or amounts.
+- 📥 **CSV Import** – Bulk import transactions from your bank or other services.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Frontend:** React, Next, and Tailwind CSS
+- **Backend:** Hono with Drizzle
+- **Database:** Neon DB
+- **Authentication:** Clerk.js
+- **Charts:** Chart.js
+- **State Management:** React Context 
+- **File Import:** CSV Parser with React Papaparse
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the Repository
+   ```bash
+   git clone https://github.com/yourusername/finify.git
+   cd finify
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. Install dependencies:
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Run the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    npm run dev
+    ```
+
+## 🙌 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or suggestions.
